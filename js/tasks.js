@@ -1,3 +1,5 @@
+var taskCount = 0;
+
 function saveTask() {
 
     let text = $("#taskInput").val();
@@ -6,16 +8,22 @@ function saveTask() {
         alert("Error: Enter New Task");
         return;
     }
+    let syntax = `
+    <li class='taskItem' id='${taskCount}'>
+    ${text}
+    <button onclick='deleteSelf(${taskCount})' class='btn btn-sm btn-danger'>Delete</button> 
+    </li>`;
 
-    let syntax = "<li class='taskItem'>" + text + "<button onclick='deleteSelf()' class='btn btn-sm btn-danger'>Delete</button> </li>";
     $("#taskContainer").append(syntax);
     $("#taskInput").val('');
     $("#taskInput").focus();
+    taskCount++;
 
 }
-function deleteSelf() {
+function deleteSelf(taskId) {
     console.log("Delete function")
-    $(this).remove();
+    $(`#${taskId}`).remove();
+    console.log(`Task ${taskId} deleted!`)
 };
 
 function init() {
